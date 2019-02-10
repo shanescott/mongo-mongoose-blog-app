@@ -1,5 +1,7 @@
 "use strict";
 
+const mongoose = require("mongoose");
+
 const postSchema = mongoose.Schema({
     title: { type: String, required: true },
     content: {type: String, required: true},
@@ -13,7 +15,7 @@ postSchema.virtual("fullName").get(function () {
     return this.author.firstName + ' ' + this.author.lastName;
 });
 
-postSchema.methods.serialize = function () {
+postSchema.methods.serialize = function() {
     return {
         id: this._id,
         title: this.title,
