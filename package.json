@@ -1,0 +1,20 @@
+{
+  "name": "mongo-mongoose-blog-app",
+  "version": "1.0.0",
+  "description": "blogging mongo-mongoose app",
+  "main": "config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shanescott/mongo-mongoose-blog-app.git"
+  },
+  "author": "shane",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shanescott/mongo-mongoose-blog-app/issues"
+  },
+  "homepage": "https://github.com/shanescott/mongo-mongoose-blog-app#readme"
+}
