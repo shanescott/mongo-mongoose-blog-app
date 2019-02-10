@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/shanescott/mongo-mongoose-blog-app/issues"
   },
-  "homepage": "https://github.com/shanescott/mongo-mongoose-blog-app#readme"
+  "homepage": "https://github.com/shanescott/mongo-mongoose-blog-app#readme",
+  "dependencies": {
+    "mongoose": "^5.4.11"
+  }
 }
