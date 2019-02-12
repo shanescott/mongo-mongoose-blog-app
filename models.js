@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 
 
 
-const authorschema = mongoose.Schema({
+const authorSchema = mongoose.Schema({
     firstName: 'string',
     lastName: 'string',
     userName: {
