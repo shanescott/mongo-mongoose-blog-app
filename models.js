@@ -35,7 +35,13 @@ postSchema.methods.serialize = function() {
     };
 };
 
-const Posts = mongoose.model("Posts", postSchema);
-const Author = mongoose.model('Author', authorSchema);
+postSchema.pre('find', function(next) {
+    this.populate('author');
+    next();
+  });
 
-module.exports = { Posts, Author };
+const Posts = mongoose.model("Posts", postSchema);
+const Author = mongoose.model("Author", authorSchema);
+
+module.exports = { Posts };
+module.exports = { Author };
