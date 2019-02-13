@@ -18,45 +18,42 @@ const commentSchema = mongoose.Schema({ content: 'string' });
 const postSchema = mongoose.Schema({
     title: 'string',
     content: 'String',
-    author: { type: mongoose.Schema.Types.ObjectId, ref: 'Author' },  
+    author: { type: mongoose.Schema.Types.ObjectId, ref: 'Authors' },  
     comments: [commentSchema] 
 });
 
-postSchema.virtual("authorName").get(function () {
+
+postSchema.pre('find', function(next) {
+    this.populate('author');
+    next();
+  });
+
+postSchema.pre('findOne', function(next) {
+    this.populate('author');
+    next();
+    });
+
+  postSchema.virtual("authorName").get(function () {
     return `${this.author.firstName} ${this.author.lastName}`.trim();
 });
 
 postSchema.methods.serialize = function() {
     return {
         id: this._id,
-        title: this.title,
+        author: this.authorName,
         content: this.content,
-        author: this.authorName
+        title: this.title,
+        comments: this.comments      
     };
 };
 
- postSchema.pre('find', function(next) {
-     this.populate('author');
-     next();
-   });
+ 
 
 
 
 
 
 const Posts = mongoose.model("Posts", postSchema);
-const Author = mongoose.model("Author", authorSchema);
+const Authors = mongoose.model("Authors", authorSchema);
 
-Posts
-.find()
-.populate('author')
-.then(function (err, post) {
-    if (err) {
-        console.log(err);
-    } else {
-       // console.log(post.author.firstName, post.author.lastName);
-    }
-});
-
-module.exports = { Posts };
-module.exports = { Author };
+module.exports = { Posts, Authors };

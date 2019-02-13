@@ -1,22 +1,40 @@
 "use strict";
 
 const express = require("express");
+const morgan = require("morgan");
 const mongoose = require("mongoose");
 
 mongoose.Promise = global.Promise;
 
 const { PORT, DATABASE_URL } = require("./config");
-const { Posts } = require("./models");
-const { Author } = require("./models");
+const { Posts, Authors } = require("./models");
 
 const app = express();
 app.use(express.json());
+app.use(morgan('common'));
+
+
+app.get('/authors', (req, res) => {
+    Authors
+    .find()
+    .then(authors => {
+        res.json(athors.map(authors => {
+            return {
+                id: authors._id,
+                name: `${authors.firstName} ${authors.lastName}`,
+                userName: authors.userName
+            };
+        }));
+    })
+    .catch(err => {
+        console.error(err);
+        res.status(500).json({ error: 'Internal server error'});
+    });
+});
 
 app.get("/posts", (req, res) => {
-    Posts
-    .find()
+    Posts.find()
     .limit(10)
-    .populate('author')
     .then(posts => {
         res.json({
             posts: posts.map(posts => posts.serialize())
@@ -62,7 +80,7 @@ app.post("/posts", (req, res) => {
    });
 });
 
-app.put("/restaurants/:id", (req, res) => {
+app.put("/posts/:id", (req, res) => {
     if(!(req.params.id && req.body.id && req.params.id === req.body.id)) {
         const message = `Request path id (${req.params.id}) and request body id` + `(${req.body.id}) must match`;
         console.error(message);
