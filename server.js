@@ -13,7 +13,8 @@ const app = express();
 app.use(express.json());
 
 app.get("/posts", (req, res) => {
-    Posts.find()
+    Posts
+    .find()
     .limit(10)
     .populate('author')
     .then(posts => {

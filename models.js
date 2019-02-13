@@ -35,13 +35,28 @@ postSchema.methods.serialize = function() {
     };
 };
 
-postSchema.pre('find', function(next) {
-    this.populate('author');
-    next();
-  });
+ postSchema.pre('find', function(next) {
+     this.populate('author');
+     next();
+   });
+
+
+
+
 
 const Posts = mongoose.model("Posts", postSchema);
 const Author = mongoose.model("Author", authorSchema);
+
+Posts
+.find()
+.populate('author')
+.then(function (err, post) {
+    if (err) {
+        console.log(err);
+    } else {
+       // console.log(post.author.firstName, post.author.lastName);
+    }
+});
 
 module.exports = { Posts };
 module.exports = { Author };
